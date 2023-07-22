@@ -5,24 +5,15 @@ const bodyParser = require("body-parser");
 
 const app = express();
 
-app.use(bodyParser.urlencoded());
+const adminRoutes = require('./admin');
+const shopRoutes = require('./shop');
 
-app.use("/add-product", (req, res, next) => {
-  //   console.log("in the middleware add-product");
-  res.send(
-    '<form action="/products" method="POST"><input type="text" name="title"/> <input type="number" name="size"/> <button type="submit">Submit</button></form>'
-  );
-});
+app.use(bodyParser.urlencoded({extended: false}));
 
-app.use("/products", (req, res, next) => {
-  console.log(req.body);
-  // res.send("<h1>Hello from Express JS path!.</h1>");
-  res.redirect("/");
-});
+app.use('/admin', adminRoutes)
+app.use(shopRoutes)
 
-app.use("/", (req, res, next) => {
-  //   console.log("In the middleware");
-  res.send("<h1>Hello from Express JS path!.</h1>");
-});
-
+app.use((req, res , next) => {
+    res.status(404).send('<h1>Page not found!.</h1>')
+})
 app.listen(4000);
