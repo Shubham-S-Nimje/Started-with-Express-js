@@ -1,12 +1,11 @@
 const expresss = require("express");
-
+const path = require("path");
+const viewPath = require("../utils/path");
 const router = expresss.Router();
 
 router.get("/add-product", (req, res, next) => {
   //   console.log("in the middleware add-product");
-  res.send(
-    '<form action="/admin/add-product" method="POST"><input type="text" name="title"/> <input type="number" name="size"/> <button type="submit">Submit</button></form>'
-  );
+  res.sendFile(viewPath('add-product.html'));
 });
 
 router.post("/add-product", (req, res, next) => {
